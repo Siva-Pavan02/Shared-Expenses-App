@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+
+# Production build
+dist/
+build/
+
+# Test coverage
+coverage/
+
+# Environment variables
+.env
+.env.*
+
+# Logs
+logs/
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE / Editor
+.idea/
+.vscode/
+
+# Prisma
+prisma/generated/
+
+# Temporary / Debug Scripts
+capture_error.ps1
+fix.js
+gen_token.js
+reproduce.js
+reproduce_settlement.js
+verify_anomalies.ps1
+verify_finalize.ps1
+verify_upload.ps1
+verify_out.txt
