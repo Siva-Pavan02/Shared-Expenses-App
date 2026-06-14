@@ -22,17 +22,137 @@ const upload = multer({
   }
 });
 
-// We map this route directly on /imports and expect groupId in the FormData
+/**
+ * @swagger
+ * tags:
+ *   name: Imports
+ *   description: CSV expense import jobs
+ */
+
+/**
+ * @swagger
+ * /groups/{groupId}/imports/upload:
+ *   post:
+ *     summary: Upload a CSV file
+ *     tags: [Imports]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: groupId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               file:
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       201:
+ *         description: File uploaded and parsing started
+ */
 router.post('/upload', authenticateJWT, authorizeGroupAdmin, upload.single('file'), importController.uploadCsv);
 
-// We can also support listing all imports for a group via /groups/:groupId/imports
+/**
+ * @swagger
+ * /groups/{groupId}/imports:
+ *   get:
+ *     summary: List group imports
+ *     tags: [Imports]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: groupId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Import jobs retrieved
+ */
 router.get('/', authenticateJWT, importController.listGroupImports);
 
-// Details for a specific import job
+/**
+ * @swagger
+ * /groups/{groupId}/imports/{id}:
+ *   get:
+ *     summary: Get import details
+ *     tags: [Imports]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: groupId
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Import job retrieved
+ */
 router.get('/:id', authenticateJWT, importController.getImportJob);
 
 // Report and Finalization
+/**
+ * @swagger
+ * /groups/{groupId}/imports/{id}/report:
+ *   get:
+ *     summary: Get import report
+ *     tags: [Imports]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: groupId
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Import report retrieved
+ */
 router.get('/:id/report', authenticateJWT, importController.getReport);
+
+/**
+ * @swagger
+ * /groups/{groupId}/imports/{id}/finalize:
+ *   post:
+ *     summary: Finalize an import job
+ *     tags: [Imports]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: groupId
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Import job finalized
+ */
 router.post('/:id/finalize', authenticateJWT, authorizeGroupAdmin, importController.finalizeImport);
 
 // Nested anomalies router
