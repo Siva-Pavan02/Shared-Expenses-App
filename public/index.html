@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shared Expenses App</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="navbar" id="app-navbar" style="display: none;">
+    <div class="navbar-brand">
+      <h1>Shared Expenses App</h1>
+    </div>
+    <div class="navbar-actions">
+      <div class="avatar" id="user-avatar">SA</div>
+      <button id="logout-btn" class="btn btn-outline btn-sm">Logout</button>
+    </div>
+  </header>
+
+  <!-- Main Layout -->
+  <div class="layout">
+    <!-- Left Sidebar -->
+    <aside class="sidebar" id="app-sidebar" style="display: none;">
+      <a href="/dashboard" class="nav-item" data-view="dashboard" data-link>
+        Dashboard
+      </a>
+      <a href="/groups" class="nav-item" data-view="groups" data-link>
+        Groups
+      </a>
+      
+      <div style="margin-top: 2rem;">
+        <label style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; display: block; padding: 0 1rem;">Current Group</label>
+        <select id="sidebar-group-selector" class="form-control" style="background: var(--bg-color); border-color: var(--border-color);">
+          <option value="">Select a group...</option>
+        </select>
+      </div>
+    </aside>
+
+    <!-- Main Content Container -->
+    <main class="main-content" id="app">
+      <div class="loader-container"><div class="spinner"></div></div>
+    </main>
+  </div>
+
+  <!-- Global Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Global Scripts -->
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>
